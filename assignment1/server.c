@@ -5,7 +5,9 @@
 #include <stdlib.h> 
 #include <netinet/in.h> 
 #include <string.h> 
+#include <errno.h>
 #define PORT 8080 
+
 int main(int argc, char const *argv[]) 
 { 
     int server_fd, new_socket, valread; 
@@ -56,11 +58,19 @@ int main(int argc, char const *argv[])
 	{
 		printf("Hello from child!\n"); 
         //setuid
+        //nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+        int s = setuid(65534);
+        printf("setuid result is: %d\n",s );
+        printf("Real user id = %d, Effective User id = %d\n",getuid(),geteuid());
+        if(s ==-1){
+            perror("Error with setuid() - errno " + errno);
+        }
         //then
         valread = read( new_socket , buffer, 1024); 
         printf("%s\n",buffer ); 
         send(new_socket , hello , strlen(hello) , 0 ); 
         printf("Hello message sent\n"); 
+        printf("Real user id = %d, Effective User id = %d\n",getuid(),geteuid());
 	}
 	else if(pid ==-1)
 	{
