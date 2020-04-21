@@ -83,7 +83,7 @@ int main(int argc, char const *argv[])
 		printf("Error - unable to fork!\n"); 
 	}
 	else {
-		printf("Hello from parent!\n"); 
+		//printf("Hello from parent!\n"); 
 	}
     
     return 0; 
