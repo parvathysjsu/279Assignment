@@ -10,5 +10,12 @@
 
 int main(int argc, char const *argv[]) 
 { 
+    printf("I am serverchild.c called by execvp() ");
+    printf("\n");
+    printf("argument:  %s",argv[1]);
+    printf("\n");
+    int fd = atoi(argv[1]);
+    printf("int: %d",fd);
+    printf("\n");
      return 0; 
 }

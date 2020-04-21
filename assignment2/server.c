@@ -56,7 +56,13 @@ int main(int argc, char const *argv[])
     int pid = fork(); 
 	if(pid ==0)
 	{
-		printf("Hello from child!\n"); 
+        char fdStr[20];
+        sprintf(fdStr, "%d", new_socket);
+        printf("fd to string: %s\n", fdStr);
+        char *args[]={"./serverChild",fdStr,NULL};
+        execvp(args[0],args);
+
+		/*printf("Hello from child!\n"); 
         //setuid
         //nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
         int s = setuid(65534);
@@ -70,7 +76,7 @@ int main(int argc, char const *argv[])
         printf("%s\n",buffer ); 
         send(new_socket , hello , strlen(hello) , 0 ); 
         printf("Hello message sent\n"); 
-        printf("Real user id = %d, Effective User id = %d\n",getuid(),geteuid());
+        printf("Real user id = %d, Effective User id = %d\n",getuid(),geteuid());*/
 	}
 	else if(pid ==-1)
 	{
