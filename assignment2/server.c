@@ -59,7 +59,10 @@ int main(int argc, char const *argv[])
         char fdStr[20];
         sprintf(fdStr, "%d", new_socket);
         //printf("fd to string: %s\n", fdStr);
-        char *args[]={"./serverChild",fdStr,NULL};
+        printf("execvp file: %s",argv[1]);
+        printf("Calling file using execvp");
+        //char *args[]={"./serverChild",fdStr,NULL};
+        char *args[]={argv[1],fdStr,NULL};
         execvp(args[0],args);
 
 		/*printf("Hello from child!\n"); 

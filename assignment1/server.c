@@ -56,12 +56,12 @@ int main(int argc, char const *argv[])
     int pid = fork(); 
 	if(pid ==0)
 	{
-		//printf("Hello from child!\n"); 
+		printf("Hello from child!\n"); 
         //setuid
         //nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
         int s = setuid(65534);
-        //printf("setuid result is: %d\n",s );
-        //printf("Real user id = %d, Effective User id = %d\n",getuid(),geteuid());
+        printf("setuid result is: %d\n",s );
+        printf("Real user id = %d, Effective User id = %d\n",getuid(),geteuid());
         if(s ==-1){
             perror(" Error with setuid() - errno " + errno);
         }
