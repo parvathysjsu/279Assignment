@@ -10,7 +10,7 @@
 
 int main(int argc, char const *argv[]) 
 { 
-        printf("I am serverchild.c called by execvp() ");
+        printf("I am serverchild.c called by execvp()\n");
      //setuid
         //nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
         int s = setuid(65534);
@@ -20,10 +20,10 @@ int main(int argc, char const *argv[])
             perror(" Error with setuid() - errno " + errno);
         }
     //printf("\n");
-    printf("argument:  %s",argv[1]);
+    printf("argument:  %s\n",argv[1]);
     //printf("\n");
     int fd = atoi(argv[1]);
-    printf("int: %d",fd);
+    printf("int: %d\n",fd);
     //printf("\n");
          char buffer[1024] = {0}; 
           char *hello = "Hello from server"; 
