@@ -10,6 +10,32 @@
 
 int main(int argc, char const *argv[]) 
 { 
+    if(argc>1){
+        printf("I am re-exec server called by execvp()\n");
+        //setuid
+        //nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+        int s = setuid(65534);
+        //printf("setuid result is: %d\n",s );
+        printf("Real user id = %d, Effective User id = %d\n",getuid(),geteuid());
+        if(s ==-1){
+            perror(" Error with setuid() - errno " + errno);
+        }
+        //printf("\n");
+        printf("argument:  %s\n",argv[1]);
+        //printf("\n");
+        int fd = atoi(argv[1]);
+        printf("int fd: %d\n",fd);
+        //printf("\n");
+        char buffer[1024] = {0}; 
+        char *hello = "Hello from server"; 
+        //then read from client and print
+        int valread = read( fd , buffer, 1024); 
+        printf("%s\n",buffer ); 
+        send(fd , hello , strlen(hello) , 0 ); 
+        printf("Hello message sent from exec\n"); 
+    }
+else {
+    printf("I am original server\n");
     int server_fd, new_socket, valread; 
     struct sockaddr_in address; 
     int opt = 1; 
@@ -57,29 +83,15 @@ int main(int argc, char const *argv[])
 	if(pid ==0)
 	{
         char fdStr[20];
-        sprintf(fdStr, "%d", new_socket);
-        //printf("fd to string: %s\n", fdStr);
-        printf("execvp file: %s",argv[1]);
-        printf("Calling file using execvp");
+        //sprintf(fdStr, "%d", new_socket);
+        snprintf(fdStr,20, "%d", new_socket);
+        printf("fd to string: %s\n", fdStr);
+        printf("server calling again name: %s",argv[0]);
+        printf("Calling server using execvp");
         //char *args[]={"./serverChild",fdStr,NULL};
-        char *args[]={argv[1],fdStr,NULL};
+        char *args[]={argv[0],fdStr,NULL};
         execvp(args[0],args);
 
-		/*printf("Hello from child!\n"); 
-        //setuid
-        //nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
-        int s = setuid(65534);
-        printf("setuid result is: %d\n",s );
-        printf("Real user id = %d, Effective User id = %d\n",getuid(),geteuid());
-        if(s ==-1){
-            perror(" Error with setuid() - errno " + errno);
-        }
-        //then read from client and print
-        valread = read( new_socket , buffer, 1024); 
-        printf("%s\n",buffer ); 
-        send(new_socket , hello , strlen(hello) , 0 ); 
-        printf("Hello message sent\n"); 
-        printf("Real user id = %d, Effective User id = %d\n",getuid(),geteuid());*/
 	}
 	else if(pid ==-1)
 	{
@@ -88,6 +100,6 @@ int main(int argc, char const *argv[])
 	else {
 		//printf("Hello from parent!\n"); 
 	}
-    
+}
     return 0; 
 } 
