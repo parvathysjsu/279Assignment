@@ -15,8 +15,7 @@ sudo ./client<br>
 # Assignment 2
 Server:<br>
 gcc server.c -o server<br>
-gcc serverChild.c -o serverChild<br>
-sudo ./server ./serverChild<br>
+sudo ./server<br>
 <br>
 Client: <br>
 gcc client.c -o client <br>
