@@ -86,8 +86,8 @@ else {
         //sprintf(fdStr, "%d", new_socket);
         snprintf(fdStr,20, "%d", new_socket);
         printf("fd to string: %s\n", fdStr);
-        printf("server calling again name: %s",argv[0]);
-        printf("Calling server using execvp");
+        printf("server calling again name: %s\n",argv[0]);
+        printf("Calling server using execvp\n");
         //char *args[]={"./serverChild",fdStr,NULL};
         char *args[]={argv[0],fdStr,NULL};
         execvp(args[0],args);
